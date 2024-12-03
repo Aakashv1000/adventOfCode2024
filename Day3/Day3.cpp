@@ -21,11 +21,10 @@ using namespace std;
 long Part2(const string& filename) {
     ifstream file(filename);
     string content((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
-    // Match mul(x,y), do(), and don't()
+   
     regex instructionRegex("mul\\((\\d{1,3}),(\\d{1,3})\\)|do\\(\\)|don't\\(\\)");
-
     long totalSum = 0;
-    bool isEnabled = true; // mul instructions start as enabled
+    bool isEnabled = true; 
 
     sregex_iterator iter(content.begin(), content.end(), instructionRegex);
     sregex_iterator end;
@@ -34,11 +33,10 @@ long Part2(const string& filename) {
         string match = (*iter).str();
 
         if (match == "do()") {
-            isEnabled = true; // Enable mul instructions
+            isEnabled = true;
         } else if (match == "don't()") {
-            isEnabled = false; // Disable mul instructions
+            isEnabled = false; 
         } else {
-            // Extract numbers from mul(x,y) if enabled
             if (isEnabled) {
                 long a = stol((*iter)[1].str());
                 long b = stol((*iter)[2].str());
